@@ -14,7 +14,7 @@ let cors = require('cors');
 const dbConnectionData = {
     host: 'localhost',
     user:'root',
-    password:'under247'
+    password:'<ChangePasswordToYourMySqlServerPassword>'
 };
 
 const initConnection = new MySqlSync({ ...dbConnectionData, multipleStatements : true });
