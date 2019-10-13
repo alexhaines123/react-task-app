@@ -5,11 +5,11 @@ The database connection details in app.js needs configuring with an account with
 
 Unable to get Docker to work with the MySQL local server
 To work:
-Clone repository
-Configure the MySQL login details in app.js on line 15-17
-When inside root of folder run: npm install
-cd into client folder: cd client
-When inside client folder run: npm install
-cd into root folder and run: npm start
-This should start the node.js express server and the React website server
-App should be on http://localhost:3000
+1. Clone repository
+2. Configure the MySQL login details in app.js on line 15-17
+3. When inside root of folder run: npm install
+4. cd into client folder: cd client
+5. When inside client folder run: npm install
+6. cd into root folder and run: npm start
+7. This should start the node.js express server and the React website server
+8. App should be on http://localhost:3000
