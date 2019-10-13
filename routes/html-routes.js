@@ -36,7 +36,6 @@ module.exports = function(app, connection) {
     app.get('/lists/:id/tasks/', function(req, res) {
         const id = req.params.id;
         connection.query('SELECT taskId, name, description, listId FROM tasks WHERE listId = ?;', [id], function(err, data) {
-            console.log(data);
             (err)?res.send(err):res.json({tasks:data})
         })
     });

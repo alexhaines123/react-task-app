@@ -14,10 +14,10 @@ let cors = require('cors');
 const dbConnectionData = {
     host: 'localhost',
     user:'root',
-    password:'<ChangePasswordToYourMySqlServerPassword>'
+    password:'<Change Password here>'
 };
 
-// Syncronous connection to be used if no database already
+// Syncronous function to be used if no database already
 const initConnection = new MySqlSync({ ...dbConnectionData, multipleStatements : true });
 let connection;
 // If database exists then create normal sql connection

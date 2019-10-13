@@ -38,7 +38,6 @@ class App extends Component {
   };
 
   updateList = (listId, name) => {
-    console.log(name)
     axios.post('http://localhost:3001/lists/' + listId + '/', {name})
       .then( data => console.log( data ) )
       .catch(error => console.log(error));
@@ -152,8 +151,6 @@ class App extends Component {
   }
 
   taskMoveHandler = (event, newListId, taskId) => {
-
-    console.log(newListId)
     this.moveTask(taskId, newListId);
     event.preventDefault();
   }
