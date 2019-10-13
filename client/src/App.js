@@ -15,6 +15,7 @@ class App extends Component {
     this.getLists();
   };
 
+  // Get the lists and the tasks for the lists and set the state with them
   getLists = () => {
     axios.get('http://localhost:3001/lists/')
       .then(
@@ -28,6 +29,7 @@ class App extends Component {
       .catch(error => console.log(error));
   };
 
+  // Method to create list
   createList = (name) => {
     axios.put('http://localhost:3001/lists/', {name})
       .then( data => console.log( data ) )
@@ -117,6 +119,7 @@ class App extends Component {
     this.setState({newList : name})
   }
 
+  // Change handlers find the index and update the state that way (understand that this is probably not best practice!)
   taskValueChangeHandler = (value, type, taskId, listId) => {
     const listIndex = this.state.lists.findIndex(list => (list.listId === listId));
     const taskIndex = this.state.lists[listIndex].tasks.findIndex(task => (task.taskId === taskId));
@@ -171,6 +174,8 @@ class App extends Component {
               key={list.listId}
               name={list.name}
               tasks={list.tasks}
+
+              // Pass the methods this way to the tasks (unsure as yet the best way, but have learnt lots already!)
               taskChange={this.taskValueChangeHandler.bind(this)}
               taskUpdate={this.taskUpdateHandler.bind(this)}
               taskDelete={this.taskDeleteHandler.bind(this)}

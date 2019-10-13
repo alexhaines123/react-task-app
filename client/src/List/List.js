@@ -4,12 +4,10 @@ import Task from '../Task/Task';
 import CreateTask from '../Task/CreateTask';
 
 const List = (props) => {
+    // Looping tasks here, not sure the best way to do this, took a while to figure out how to work it!
     let tasks = (props.tasks) ? props.tasks.map((task, index) => {
         return (
           <Task
-          // change={(evt) => {this.listValueChangedHandler(list.listId, evt.target.value)}}
-          // update={(evt) => this.listUpdateHandler(list.listId, evt)}
-          // delete={() => this.listDeleteHandler(list.listId)}
           key={task.taskId}
           name={task.name}
           description={task.description}

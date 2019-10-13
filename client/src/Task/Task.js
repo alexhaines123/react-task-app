@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './Task.css';
 
 const Task = (props) => {
+    // Using hooks, very handy!
     const [newListId, setNewListId] = useState(props.lists[0].listId);
 
     return (

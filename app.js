@@ -17,8 +17,10 @@ const dbConnectionData = {
     password:'<ChangePasswordToYourMySqlServerPassword>'
 };
 
+// Syncronous connection to be used if no database already
 const initConnection = new MySqlSync({ ...dbConnectionData, multipleStatements : true });
 let connection;
+// If database exists then create normal sql connection
 if (initConnection.query('SHOW DATABASES LIKE "taskboard";').length > 0) {
   connection = mysql.createConnection({ ...dbConnectionData, database: 'taskboard' });
 } else {
@@ -41,6 +43,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+// Use the apis to be used by react
 require('./routes/html-routes')(app, connection);
 
 // view engine setup
