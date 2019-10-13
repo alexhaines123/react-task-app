@@ -3,22 +3,43 @@ const createError = require('http-errors'),
   path = require('path'),
   cookieParser = require('cookie-parser'),
   logger = require('morgan'),
-  mysql = require('mysql'),
+  mysql = require('mysql2'),
   indexRouter = require('./routes/index'),
-  usersRouter = require('./routes/users');
+  fs = require( 'fs' ),
+  bodyParser = require('body-parser'),
+  MySqlSync = require('sync-mysql');
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user:'root',
-  password:'myjs123',//password of your mysql db
-  database:'task-board'
-  });
+let cors = require('cors');
 
-connection.connect(function(err){
-  (err)? console.log(err+'+++++++++++++++//////////'): console.log('connection********');
-  });
+const dbConnectionData = {
+    host: 'localhost',
+    user:'root',
+    password:'under247'
+};
 
+const initConnection = new MySqlSync({ ...dbConnectionData, multipleStatements : true });
+let connection;
+if (initConnection.query('SHOW DATABASES LIKE "taskboard";').length > 0) {
+  connection = mysql.createConnection({ ...dbConnectionData, database: 'taskboard' });
+} else {
+  try {
+    connection = mysql.createConnection({ ...dbConnectionData, database: 'taskboard' });
+    const createDbSql = String( fs.readFileSync( 'createdb.sql' ) );
+    initConnection.query( createDbSql);
+    connection = mysql.createConnection({ ...dbConnectionData, database: 'taskboard' });
+  } catch (e) {
+    console.log('Database already created')
+  }
+}
 const app = express();
+
+//CORS
+app.use(cors());
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 require('./routes/html-routes')(app, connection);
 
@@ -33,7 +54,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,6 +65,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  console.log(err);
 
   // render the error page
   res.status(err.status || 500);
